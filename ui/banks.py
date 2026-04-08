@@ -162,8 +162,8 @@ class BanksPage(QWidget):
 
         # Create table
         self.table = QTableWidget()
-        self.table.setColumnCount(5)
-        self.table.setHorizontalHeaderLabels(["البنك", "الرصيد", "تاريخ الإنشاء", "تعديل", "حذف"])
+        self.table.setColumnCount(4)
+        self.table.setHorizontalHeaderLabels(["البنك", "الرصيد", "تعديل", "حذف"])
         self.table.setStyleSheet("""
             QTableWidget {
                 background-color: white;
@@ -184,9 +184,8 @@ class BanksPage(QWidget):
         """)
         self.table.setColumnWidth(0, 250)
         self.table.setColumnWidth(1, 150)
-        self.table.setColumnWidth(2, 150)
+        self.table.setColumnWidth(2, 100)
         self.table.setColumnWidth(3, 100)
-        self.table.setColumnWidth(4, 100)
         
         self.load()
         table_layout.addWidget(self.table)
@@ -215,11 +214,7 @@ class BanksPage(QWidget):
             balance_item.setTextAlignment(Qt.AlignCenter)
             self.table.setItem(i, 1, balance_item)
             
-            # Date created
-            date_item = QTableWidgetItem(str(bank.balance if hasattr(bank, 'date_created') else ""))
-            date_item.setTextAlignment(Qt.AlignCenter)
-            self.table.setItem(i, 2, date_item)
-            
+
             # Edit button
             edit_btn = QPushButton("✏️ تعديل")
             edit_btn.setMinimumHeight(32)
@@ -236,7 +231,7 @@ class BanksPage(QWidget):
                 }
             """)
             edit_btn.clicked.connect(lambda checked, bid=bank.id, bname=bank.name: self.edit_bank(bid, bname))
-            self.table.setCellWidget(i, 3, edit_btn)
+            self.table.setCellWidget(i, 2, edit_btn)
             
             # Delete button
             delete_btn = QPushButton("🗑️ حذف")
@@ -254,7 +249,7 @@ class BanksPage(QWidget):
                 }
             """)
             delete_btn.clicked.connect(lambda checked, bid=bank.id, bname=bank.name: self.delete_bank(bid, bname))
-            self.table.setCellWidget(i, 4, delete_btn)
+            self.table.setCellWidget(i, 3, delete_btn)
 
     def add_bank(self):
         """إضافة بنك جديد"""

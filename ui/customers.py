@@ -99,10 +99,6 @@ class CustomersPage(QWidget):
         self.region_input.setPlaceholderText("المنطقة")
         self.region_input.setMinimumHeight(40)
 
-        self.cash_input = QLineEdit()
-        self.cash_input.setPlaceholderText("الكاش (اختياري)")
-        self.cash_input.setMinimumHeight(40)
-
         add_btn = QPushButton("إضافة العميل")
         add_btn.setMinimumHeight(40)
         add_btn.setMinimumWidth(120)
@@ -124,8 +120,6 @@ class CustomersPage(QWidget):
         add_layout.addWidget(self.name_input, 1)
         add_layout.addWidget(QLabel("المنطقة:"), 0)
         add_layout.addWidget(self.region_input, 1)
-        add_layout.addWidget(QLabel("الكاش:"), 0)
-        add_layout.addWidget(self.cash_input, 1)
         add_layout.addWidget(add_btn, 0)
 
         add_section.setLayout(add_layout)
@@ -175,8 +169,8 @@ class CustomersPage(QWidget):
 
         # Create table
         self.table = QTableWidget()
-        self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(["العميل", "المنطقة", "الرصيد", "الكاش", "تعديل", "حذف"])
+        self.table.setColumnCount(5)
+        self.table.setHorizontalHeaderLabels(["العميل", "المنطقة", "الرصيد", "تعديل", "حذف"])
         self.table.setStyleSheet("""
             QTableWidget {
                 background-color: white;
@@ -198,9 +192,8 @@ class CustomersPage(QWidget):
         self.table.setColumnWidth(0, 200)
         self.table.setColumnWidth(1, 120)
         self.table.setColumnWidth(2, 120)
-        self.table.setColumnWidth(3, 120)
+        self.table.setColumnWidth(3, 80)
         self.table.setColumnWidth(4, 80)
-        self.table.setColumnWidth(5, 80)
         
         self.load()
         table_layout.addWidget(self.table)
@@ -238,11 +231,6 @@ class CustomersPage(QWidget):
                 balance_item.setBackground(QColor("#eafaf1"))
             self.table.setItem(i, 2, balance_item)
             
-            # Cash (الكاش)
-            cash_item = QTableWidgetItem("-")
-            cash_item.setTextAlignment(Qt.AlignCenter)
-            self.table.setItem(i, 3, cash_item)
-            
             # Edit button
             edit_btn = QPushButton("✏️ تعديل")
             edit_btn.setMinimumHeight(32)
@@ -259,7 +247,7 @@ class CustomersPage(QWidget):
                 }
             """)
             edit_btn.clicked.connect(lambda checked, cid=customer.id, cname=customer.name, cregion=customer.region: self.edit_customer(cid, cname, cregion))
-            self.table.setCellWidget(i, 4, edit_btn)
+            self.table.setCellWidget(i, 3, edit_btn)
             
             # Delete button
             delete_btn = QPushButton("🗑️ حذف")
@@ -277,7 +265,7 @@ class CustomersPage(QWidget):
                 }
             """)
             delete_btn.clicked.connect(lambda checked, cid=customer.id, cname=customer.name: self.delete_customer(cid, cname))
-            self.table.setCellWidget(i, 5, delete_btn)
+            self.table.setCellWidget(i, 4, delete_btn)
 
     def add_customer(self):
         """إضافة عميل جديد"""
@@ -293,7 +281,6 @@ class CustomersPage(QWidget):
             QMessageBox.information(self, "نجاح", f"تم إضافة العميل '{name}' بنجاح")
             self.name_input.clear()
             self.region_input.clear()
-            self.cash_input.clear()
             self.load()
         except Exception as e:
             QMessageBox.critical(self, "خطأ", f"خطأ في إضافة العميل: {str(e)}")
