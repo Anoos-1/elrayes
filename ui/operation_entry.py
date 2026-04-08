@@ -81,7 +81,7 @@ class OperationEntryPage(QWidget):
         self.gross_input.setPlaceholderText("الوزن قبل الخصم")
 
         self.deduction_input = QLineEdit()
-        self.deduction_input.setPlaceholderText("الخصم (كارتون + هالك)")
+        self.deduction_input.setPlaceholderText("نسبة الخصم %")
 
         self.net_input = QLineEdit()
         self.net_input.setPlaceholderText("الوزن بعد الخصم")
@@ -90,7 +90,7 @@ class OperationEntryPage(QWidget):
 
         input_grid.addWidget(QLabel("قبل الخصم:"), 2, 0)
         input_grid.addWidget(self.gross_input, 2, 1)
-        input_grid.addWidget(QLabel("الخصم:"), 2, 2)
+        input_grid.addWidget(QLabel("نسبة الخصم %:"), 2, 2)
         input_grid.addWidget(self.deduction_input, 2, 3)
         input_grid.addWidget(QLabel("بعد الخصم:"), 2, 4)
         input_grid.addWidget(self.net_input, 2, 5)
@@ -171,9 +171,12 @@ class OperationEntryPage(QWidget):
     def calc_net_weight(self):
         try:
             gross = float(self.gross_input.text()) if self.gross_input.text() else 0
-            deduction = float(self.deduction_input.text()) if self.deduction_input.text() else 0
-            net = max(gross - deduction, 0)
-            self.net_input.setText(str(net))
+            # الخصم الآن نسبة مئوية، لا رقم ثابت
+            deduction_percent = float(self.deduction_input.text()) if self.deduction_input.text() else 0
+            # حساب الوزن بعد الخصم: gross - (gross * deduction_percent / 100)
+            deduction_amount = (gross * deduction_percent) / 100
+            net = max(gross - deduction_amount, 0)
+            self.net_input.setText(str(round(net, 2)))
             self.calc_supplier_amount()
         except ValueError:
             self.net_input.setText("")

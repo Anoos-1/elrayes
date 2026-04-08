@@ -61,6 +61,39 @@ def get_account_balance(account_id):
         s.close()
 
 
+def update_account(account_id, name, region=""):
+    """Update account information"""
+    s = Session()
+    try:
+        acc = s.query(Account).filter_by(id=account_id).first()
+        if acc:
+            acc.name = name
+            if region:
+                acc.region = region
+            s.commit()
+            return acc
+    except Exception as e:
+        s.rollback()
+        print(f"Error updating account: {e}")
+    finally:
+        s.close()
+
+
+def delete_account(account_id):
+    """Delete an account"""
+    s = Session()
+    try:
+        acc = s.query(Account).filter_by(id=account_id).first()
+        if acc:
+            s.delete(acc)
+            s.commit()
+    except Exception as e:
+        s.rollback()
+        print(f"Error deleting account: {e}")
+    finally:
+        s.close()
+
+
 # ============================
 # Operations
 # ============================
