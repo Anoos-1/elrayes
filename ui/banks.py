@@ -168,18 +168,20 @@ class BanksPage(QWidget):
             QTableWidget {
                 background-color: white;
                 gridline-color: #E5E7EB;
-                font-size: 13px;
+                font-size: 11px;
                 border-radius: 6px;
             }
             QHeaderView::section {
-                background-color: #003D7A;
+                background-color: #1D7874;
                 color: white;
-                padding: 10px;
+                padding: 6px;
                 font-weight: bold;
                 border: none;
+                height: 32px;
             }
             QTableWidget::item {
-                padding: 8px;
+                padding: 4px;
+                height: 28px;
             }
         """)
         self.table.setColumnWidth(0, 250)

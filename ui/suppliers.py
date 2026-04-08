@@ -175,18 +175,20 @@ class SuppliersPage(QWidget):
             QTableWidget {
                 background-color: white;
                 gridline-color: #E5E7EB;
-                font-size: 13px;
+                font-size: 11px;
                 border-radius: 6px;
             }
             QHeaderView::section {
                 background-color: #E63946;
                 color: white;
-                padding: 10px;
+                padding: 6px;
                 font-weight: bold;
                 border: none;
+                height: 32px;
             }
             QTableWidget::item {
-                padding: 8px;
+                padding: 4px;
+                height: 28px;
             }
         """)
         self.table.setColumnWidth(0, 200)
@@ -194,6 +196,7 @@ class SuppliersPage(QWidget):
         self.table.setColumnWidth(2, 120)
         self.table.setColumnWidth(3, 80)
         self.table.setColumnWidth(4, 80)
+        self.table.setRowHeight(0, 28)
         
         self.load()
         table_layout.addWidget(self.table)
