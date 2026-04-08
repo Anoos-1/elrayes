@@ -12,7 +12,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont
 
 from services import create_account, get_accounts, get_account_balance, update_account, delete_account
-from ui.ledger_view import LedgerViewPage
+from ui.account_statement import AccountStatementPage
 
 
 class SuppliersPage(QWidget):
@@ -382,5 +382,5 @@ class SuppliersPage(QWidget):
         
         suppliers = get_accounts("supplier")
         supplier = suppliers[current_row]
-        self.ledger_window = LedgerViewPage(supplier.id, supplier.name)
+        self.ledger_window = AccountStatementPage(supplier.id, supplier.name, "supplier")
         self.ledger_window.show()
