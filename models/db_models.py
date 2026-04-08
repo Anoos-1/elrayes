@@ -63,6 +63,20 @@ class ItemType(Base):
 
 
 # =========================
+# Bank Accounts Table
+# =========================
+class BankAccount(Base):
+    __tablename__ = "bank_accounts"
+
+    id = Column(Integer, primary_key=True)
+    bank_name = Column(String)          # Bank name (e.g., البنك الأهلي)
+    account_name = Column(String)       # Account name (e.g., حساب جاري)
+    account_number = Column(String)     # Account number
+    initial_balance = Column(Float, default=0)
+    current_balance = Column(Float, default=0)
+
+
+# =========================
 # Treasury Transactions Table
 # =========================
 class TreasuryTransaction(Base):

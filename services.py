@@ -349,3 +349,97 @@ def add_item_type(name):
         print(f"Error adding item type: {e}")
     finally:
         s.close()
+
+
+# ============================
+# Bank Accounts
+# ============================
+def create_bank_account(bank_name, account_name, account_number, initial_balance):
+    """Create a new bank account"""
+    from models.db_models import BankAccount
+    s = Session()
+    try:
+        bank_account = BankAccount(
+            bank_name=bank_name,
+            account_name=account_name,
+            account_number=account_number,
+            initial_balance=initial_balance,
+            current_balance=initial_balance
+        )
+        s.add(bank_account)
+        s.commit()
+        return bank_account
+    except Exception as e:
+        s.rollback()
+        print(f"Error creating bank account: {e}")
+        return None
+    finally:
+        s.close()
+
+
+def get_bank_accounts():
+    """Get all bank accounts"""
+    from models.db_models import BankAccount
+    s = Session()
+    try:
+        data = s.query(BankAccount).all()
+        return data
+    except Exception as e:
+        print(f"Error getting bank accounts: {e}")
+        return []
+    finally:
+        s.close()
+
+
+def get_bank_account_by_id(account_id):
+    """Get a single bank account by ID"""
+    from models.db_models import BankAccount
+    s = Session()
+    try:
+        account = s.query(BankAccount).filter_by(id=account_id).first()
+        return account
+    except Exception as e:
+        print(f"Error getting bank account: {e}")
+        return None
+    finally:
+        s.close()
+
+
+def update_bank_account(account_id, bank_name, account_name, account_number):
+    """Update a bank account"""
+    from models.db_models import BankAccount
+    s = Session()
+    try:
+        account = s.query(BankAccount).filter_by(id=account_id).first()
+        if account:
+            account.bank_name = bank_name
+            account.account_name = account_name
+            account.account_number = account_number
+            s.commit()
+            return account
+        return None
+    except Exception as e:
+        s.rollback()
+        print(f"Error updating bank account: {e}")
+        return None
+    finally:
+        s.close()
+
+
+def delete_bank_account(account_id):
+    """Delete a bank account"""
+    from models.db_models import BankAccount
+    s = Session()
+    try:
+        account = s.query(BankAccount).filter_by(id=account_id).first()
+        if account:
+            s.delete(account)
+            s.commit()
+            return True
+        return False
+    except Exception as e:
+        s.rollback()
+        print(f"Error deleting bank account: {e}")
+        return False
+    finally:
+        s.close()
