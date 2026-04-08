@@ -6,7 +6,7 @@ Suppliers Management Page
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QTableWidget,
     QTableWidgetItem, QPushButton, QLineEdit, QMessageBox, QLabel,
-    QDialog, QFormLayout, QGroupBox, QScrollArea, QFrame
+    QDialog, QFormLayout, QGroupBox, QScrollArea, QFrame, QHeaderView
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont
@@ -177,6 +177,7 @@ class SuppliersPage(QWidget):
                 gridline-color: #E5E7EB;
                 font-size: 11px;
                 border-radius: 6px;
+                border: none;
             }
             QHeaderView::section {
                 background-color: #E63946;
@@ -191,12 +192,16 @@ class SuppliersPage(QWidget):
                 height: 28px;
             }
         """)
-        self.table.setColumnWidth(0, 200)
-        self.table.setColumnWidth(1, 120)
-        self.table.setColumnWidth(2, 120)
+        # Set column resize modes for proper alignment
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.Stretch)  # Supplier name
+        header.setSectionResizeMode(1, QHeaderView.Stretch)  # Region
+        header.setSectionResizeMode(2, QHeaderView.Stretch)  # Balance
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)  # Edit button
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)  # Delete button
+        self.table.setMinimumHeight(300)
         self.table.setColumnWidth(3, 80)
         self.table.setColumnWidth(4, 80)
-        self.table.setRowHeight(0, 28)
         
         self.load()
         table_layout.addWidget(self.table)

@@ -6,7 +6,7 @@ Banks Management Page
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QTableWidget,
     QTableWidgetItem, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog, QFormLayout,
-    QGroupBox, QScrollArea, QFrame, QSpinBox
+    QGroupBox, QScrollArea, QFrame, QSpinBox, QHeaderView
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont
@@ -170,6 +170,7 @@ class BanksPage(QWidget):
                 gridline-color: #E5E7EB;
                 font-size: 11px;
                 border-radius: 6px;
+                border: none;
             }
             QHeaderView::section {
                 background-color: #1D7874;
@@ -184,10 +185,15 @@ class BanksPage(QWidget):
                 height: 28px;
             }
         """)
-        self.table.setColumnWidth(0, 250)
-        self.table.setColumnWidth(1, 150)
-        self.table.setColumnWidth(2, 100)
-        self.table.setColumnWidth(3, 100)
+        # Set column resize modes for proper alignment
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.Stretch)  # Bank name
+        header.setSectionResizeMode(1, QHeaderView.Stretch)  # Balance
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)  # Edit button
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)  # Delete button
+        self.table.setMinimumHeight(300)
+        self.table.setColumnWidth(2, 80)
+        self.table.setColumnWidth(3, 80)
         
         self.load()
         table_layout.addWidget(self.table)
