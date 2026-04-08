@@ -56,19 +56,23 @@ class LedgerViewPage(QWidget):
             QTableWidget {
                 background-color: white;
                 gridline-color: #bdc3c7;
-                font-size: 14px;
+                font-size: 11px;
+                border-radius: 6px;
             }
             QHeaderView::section {
                 background-color: #c0392b;
                 color: white;
-                padding: 8px;
+                padding: 6px;
                 font-weight: bold;
-                font-size: 13px;
+                font-size: 12px;
+                height: 32px;
             }
             QTableWidget::item {
                 padding: 4px;
+                height: 28px;
             }
         """)
+        self.table.setRowHeight(0, 28)
 
         layout.addWidget(self.table)
 

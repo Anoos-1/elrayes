@@ -39,15 +39,22 @@ class BankPage(QWidget):
             QTableWidget {
                 background-color: white;
                 gridline-color: #dcdde1;
-                font-size: 14px;
+                font-size: 11px;
+                border-radius: 6px;
             }
             QHeaderView::section {
                 background-color: #34495e;
                 color: white;
                 padding: 6px;
                 font-weight: bold;
+                height: 32px;
+            }
+            QTableWidget::item {
+                padding: 4px;
+                height: 28px;
             }
         """)
+        self.table.setRowHeight(0, 28)
 
         main_layout.addWidget(self.table)
 
