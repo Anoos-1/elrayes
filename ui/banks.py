@@ -73,48 +73,77 @@ class BanksPage(QWidget):
         add_section = QGroupBox("إضافة بنك جديد")
         add_section.setStyleSheet("""
             QGroupBox {
-                background-color: white;
+                background: linear-gradient(135deg, #ffffff 0%, #F9FAFB 100%);
                 border-radius: 8px;
                 margin-top: 10px;
                 padding-top: 20px;
-                border: 1px solid #E5E7EB;
+                border: 2px solid #1D7874;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 right: 10px;
                 padding: 0 6px;
-                color: #003D7A;
+                color: #1D7874;
                 font-weight: bold;
+                font-size: 13px;
             }
         """)
 
-        add_layout = QHBoxLayout()
+        add_layout = QVBoxLayout()
+        add_layout.setContentsMargins(15, 15, 15, 15)
+        add_layout.setSpacing(12)
+
+        # Input row with label
+        input_row = QHBoxLayout()
+        input_row.setSpacing(12)
+
+        label = QLabel("اسم البنك:")
+        label.setFont(QFont("Segoe UI", 11, QFont.Bold))
+        label.setMinimumWidth(100)
+        input_row.addWidget(label)
 
         self.bank_name_input = QLineEdit()
-        self.bank_name_input.setPlaceholderText("اسم البنك")
+        self.bank_name_input.setPlaceholderText("أدخل اسم البنك (مثال: البنك الأهلي، بنك مصر)")
         self.bank_name_input.setMinimumHeight(40)
+        self.bank_name_input.setStyleSheet("""
+            QLineEdit {
+                background-color: white;
+                border: 1px solid #D1D5DB;
+                border-radius: 6px;
+                padding: 8px;
+                font-size: 11px;
+            }
+            QLineEdit:focus {
+                border: 2px solid #1D7874;
+                background-color: #F0F9F8;
+            }
+        """)
+        input_row.addWidget(self.bank_name_input)
 
         add_btn = QPushButton("إضافة البنك")
         add_btn.setMinimumHeight(40)
-        add_btn.setMinimumWidth(120)
+        add_btn.setMinimumWidth(140)
+        add_btn.setFont(QFont("Segoe UI", 11, QFont.Bold))
         add_btn.setStyleSheet("""
             QPushButton {
-                background-color: #0052CC;
+                background-color: #1D7874;
                 color: white;
                 border: none;
                 border-radius: 6px;
                 font-weight: bold;
+                padding: 8px 16px;
             }
             QPushButton:hover {
-                background-color: #0041A8;
+                background-color: #155E54;
+            }
+            QPushButton:pressed {
+                background-color: #0F4A42;
             }
         """)
         add_btn.clicked.connect(self.add_bank)
+        input_row.addWidget(add_btn)
 
-        add_layout.addWidget(QLabel("اسم البنك:"), 0)
-        add_layout.addWidget(self.bank_name_input, 1)
-        add_layout.addWidget(add_btn, 0)
-
+        add_layout.addLayout(input_row)
         add_section.setLayout(add_layout)
         content_layout.addWidget(add_section)
 
